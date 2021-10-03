@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="{{ asset("assets/bootstrap/bootstrap.min.css") }}"/>
+       
+    </head>
+    <body>
+     {% include 'pages/base/header.html.twig' %}
+
+        {% block body %} 
+
+        {% endblock %}
+    </body>
+</html>
