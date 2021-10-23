@@ -9,8 +9,16 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page"  {% if current_menu is defined and current_menu == 'properties' %} active {% endif %} href="{{path('property.index')}}">Acheter</a>
         </li>
-          
+      </ul>
+        {% if app.user %}
+              <ul class = "navbar-nav my-2 my-lg-0">
+                    <li class="nav-item">
+                      <a href="{{ path('app_logout') }}" class="nav-link"> Deconnexion </a>
+                    </li>
+              </ul>
+       {% endif %}
       
     </div>
   </div>
+
 </nav>
