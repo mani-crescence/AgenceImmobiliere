@@ -4,12 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Property;
 use App\Repository\PropertyRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
+use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
 class PropertyController extends AbstractController
@@ -30,14 +31,18 @@ class PropertyController extends AbstractController
     /**
      * @Route("/biens/" , name="property.index")
      */
-    public function index()
+    public function index(PaginatorInterface $paginator , Request $request)
       {
-         $property = $this->repository->findAllVisible();
-         
+         $properties =$paginator->paginate(
+           $this->repository->findAllVisibleQuery(),
+           $request->query->getInt('page', 1) ,
+           12
+         );  
          $this->em->flush();
 
              return $this->render("pages/property/index.html.twig" , [
-               'current_menu'=>'properties'
+               'current_menu'=>'properties',
+               'properties' => $properties
         ]);
       }
 
@@ -47,7 +52,8 @@ class PropertyController extends AbstractController
        */
     public function show(Property $property, string $slug):Response
     {
-          if ($property->getSlug() !== $slug )
+
+                 if ($property->getSlug() !== $slug )
           {
             return $this->redirectToRoute('property.show' , [
               'id' => $property->getId(),
