@@ -3,6 +3,8 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 {% block body %}
 <div class="container mt-4 ">
-   <h1> Editer les biens </h1>
-   {{ include ('pages/admin/property/_form.html.twig',{form: form, button: 'Editer'} )}}
+   <h1> Editer l'option </h1>
+   {{ include ('pages/admin/option/_form.html.twig',{form: form, button: 'Editer'} )}}
 </div>
+
+{% endblock %}
